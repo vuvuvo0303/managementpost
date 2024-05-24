@@ -1,23 +1,33 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from '../components/HomePage/Home';
-import Navbar from '../components/HomePage/Navbar/Navbar';
-import Footer from '../components/HomePage/Footer/Footer';
-import Dashboard from '../components/HomePage/Dashboard';
-import AddPost from '../components/AddPostPage/AddPost';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const App: React.FC = () => {
+import AddPost from "../components/AddPostPage/AddPost";
+import DashBoard from "../pages/dashboard/DashBoard";
+import Home from "../components/HomePage/Home";
+import ManagePosts from "../pages/dashboard/ManagePosts";
+function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/dashboard",
+      element: <DashBoard />,
+    },
+    {
+      path: "/dashboard",
+      children: [{ path: "/dashboard/management-posts", element: <ManagePosts /> }],
+    },
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/addpost",
+      element: <AddPost />,
+    },
+  ]);
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/addpost" element={<AddPost />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
-};
+}
 
 export default App;
