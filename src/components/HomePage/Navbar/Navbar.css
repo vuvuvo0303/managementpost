@@ -1,0 +1,33 @@
+/* Navbar container */
+.ant-menu-horizontal {
+    border: none;
+    /* Remove border */
+}
+
+/* Menu items */
+.ant-menu-item {
+    margin: 0 10px;
+    /* Adjust spacing between menu items */
+}
+
+/* Menu item link */
+.ant-menu-item a {
+    color: #333;
+    /* Set text color */
+    text-decoration: none;
+    /* Remove underline */
+    transition: color 0.3s;
+    /* Smooth transition for color change */
+}
+
+/* Hover effect */
+.ant-menu-item:hover a {
+    color: #1890ff;
+    /* Change text color on hover */
+}
+
+/* Active menu item */
+.ant-menu-item-selected a {
+    color: #1890ff;
+    /* Set text color for active menu item */
+}
