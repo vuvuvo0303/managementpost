@@ -2,15 +2,15 @@ import { Form, Input, Button, message } from "antd";
 import { useState } from "react";
 import axios from "axios";
 
-interface PostData {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  video: string;
-  urlTag: string;
-  status: string;
-}
+// interface PostData {
+//   id: string;
+//   title: string;
+//   description: string;
+//   image: string;
+//   video: string;
+//   urlTag: string;
+//   status: string;
+// }
 
 interface UpdatePostProps {
   postId: string;
@@ -27,7 +27,7 @@ const UpdatePost: React.FC<UpdatePostProps> = ({ postId }) => {
         values
       );
       message.success("Post updated successfully");
-      console.log(response.data); // Updated post data from server
+      console.log(response.data);
       setLoading(false);
     } catch (error) {
       message.error("Failed to update post");
@@ -40,7 +40,7 @@ const UpdatePost: React.FC<UpdatePostProps> = ({ postId }) => {
       name="update_post_form"
       layout="vertical"
       onFinish={onFinish}
-      initialValues={{}} // Set initial values if needed
+      initialValues={{}}
     >
       <Form.Item
         name="title"
