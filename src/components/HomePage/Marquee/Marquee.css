@@ -10,6 +10,7 @@
             rgba(255, 121, 78, 1) 100%);
     overflow: hidden;
     position: relative;
+    margin-top: 20px;
 }
 
 .marquee div {

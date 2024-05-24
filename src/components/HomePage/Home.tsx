@@ -1,7 +1,7 @@
 // pages/Home.tsx
 import React from 'react';
 import BlogList from '../Blog/BlogList';
-import BannerCarousel from '../HomePage/BannerCarousel/BannerCarousel';
+// import BannerCarousel from '../HomePage/BannerCarousel/BannerCarousel';
 import Marquee from '../HomePage/Marquee/Marquee'
 
 const Home: React.FC = () => {
@@ -9,7 +9,7 @@ const Home: React.FC = () => {
         <div>
             {/* <h1>DailyNews: Thông tin mỗi ngày!</h1> */}
             <Marquee />
-            <BannerCarousel />
+            {/* <BannerCarousel /> */}
             <BlogList />
         </div>
     );

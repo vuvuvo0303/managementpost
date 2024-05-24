@@ -15,6 +15,8 @@ const BlogCard: React.FC<Props> = ({ blogs }) => {
         blog.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    console.log(filteredBlogs); // Log filtered blogs to verify data
+
     return (
         <div>
             <Input
@@ -25,16 +27,17 @@ const BlogCard: React.FC<Props> = ({ blogs }) => {
             />
             <Row gutter={[16, 16]}>
                 {filteredBlogs.map(blog => (
-                    <Col key={blog.id} xs={24} sm={12} md={8} lg={6}>
+                    <Col key={blog.id} xs={24} sm={12} md={8} lg={8}>
                         <Card
                             title={blog.title}
-                            extra={<Link to={`/blogs/${blog.id}`}>More</Link>}
+                            extra={<button style={{ color: blog.status.toLowerCase() === 'draft' ? 'red' : 'green' }}>{blog.status}</button>}
                             hoverable
                             style={{ width: '100%' }}
-                            cover={<img src={blog.image} alt={blog.title} style={{ width: '100%' }} />}
+                            cover={<img src={blog.image} alt={blog.title} style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' }} />}
                         >
+                            <p>{blog.createdAt}</p>
                             <p>{blog.description}</p>
-                            <p>Status: {blog.status}</p>
+                            {/* <p style={{ color: blog.status.toLowerCase() === 'draft' ? 'red' : 'green' }}>{blog.status}</p> */}
                         </Card>
                     </Col>
                 ))}

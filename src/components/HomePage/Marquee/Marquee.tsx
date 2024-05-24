@@ -14,7 +14,7 @@ const Marquee: React.FC = () => {
                         style={{ textDecoration: 'none', color: 'black', fontWeight: 'bolder' }}>
                         DAILY!
                     </a>{' '}
-                    HỌC TẠI ĐẠI HỌC FPT SẼ CÓ CƠ HỘI ĐƯỢC TRẢI NGHIỆM MỘT KÌ THỰC TẬP TẠI FSOFT (Một trong những cty công nghệ hàng đầu Việt Nam)
+                    STUDYING AT FPT UNIVERSITY WILL HAVE THE OPPORTUNITY TO EXPERIENCE AN INTERNSHIP AT FSOFT (One of the leading technology companies in Vietnam)
                 </span>
 
                 <span>
@@ -26,7 +26,7 @@ const Marquee: React.FC = () => {
                         style={{ textDecoration: 'none', color: 'black', fontWeight: 'bolder' }}>
                         DAILY!
                     </a>{' '}
-                    HỌC TẠI ĐẠI HỌC FPT SẼ CÓ CƠ HỘI ĐƯỢC TRẢI NGHIỆM MỘT KÌ THỰC TẬP TẠI FSOFT (Một trong những cty công nghệ hàng đầu Việt Nam)
+                    STUDYING AT FPT UNIVERSITY WILL HAVE THE OPPORTUNITY TO EXPERIENCE AN INTERNSHIP AT FSOFT (One of the leading technology companies in Vietnam)
                 </span>
             </div>
         </div>
