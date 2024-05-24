@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { format } from 'date-fns'; // Import the format function from date-fns
@@ -31,12 +31,12 @@ const Details = () => {
 
     return (
         <div>
-            <Navbar/>
+            <Navbar />
             <h2>{blog.title}</h2>
             <p>{formattedDateTime}</p>
             <img src={blog.image} alt={blog.title} style={{ maxWidth: '100%', maxHeight: '600px', width: '1000px', objectFit: 'cover' }} />
             <p>{blog.description}</p>
-            <Footer/>
+            <Footer />
         </div>
     );
 };
