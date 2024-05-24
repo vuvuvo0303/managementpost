@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Input } from 'antd';
-import { Link } from 'react-router-dom';
 import { Blog } from './Blog'; // Import the Blog interface
+import { format } from 'date-fns'; // Import the format function from date-fns
+import { Link } from 'react-router-dom';
 
 interface Props {
     blogs: Blog[];
@@ -35,9 +36,9 @@ const BlogCard: React.FC<Props> = ({ blogs }) => {
                             style={{ width: '100%' }}
                             cover={<img src={blog.image} alt={blog.title} style={{ maxWidth: '100%', maxHeight: '300px', objectFit: 'cover' }} />}
                         >
-                            <p>{blog.createdAt}</p>
+                            <p>{format(new Date(blog.createdAt), 'dd/MM/yyyy HH:mm:ss')}</p>
                             <p>{blog.description}</p>
-                            {/* <p style={{ color: blog.status.toLowerCase() === 'draft' ? 'red' : 'green' }}>{blog.status}</p> */}
+                            <Link to={`/blogs/${blog.id}`}>Details</Link>
                         </Card>
                     </Col>
                 ))}
