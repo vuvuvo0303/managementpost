@@ -54,7 +54,7 @@ const AddPost: React.FC = () => {
       };
       await axios.post("https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement", postData);
       toast.success("Add post successfully");
-      navigate("/dashboard"); // Redirect to dashboard after successful submission
+      navigate("/dashboard/management-posts"); // Redirect to dashboard after successful submission
     } catch (errorInfo) {
       toast.error("Failed to add post.");
     }
@@ -62,7 +62,7 @@ const AddPost: React.FC = () => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <main className="main-content">
         <div className="form-container">
           <h1 className="page-title">Create New Post</h1>

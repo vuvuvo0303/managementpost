@@ -1,12 +1,13 @@
-import { Avatar, Breadcrumb, Button, Image, Layout, Popconfirm, Table, Tag } from "antd";
+import {  Breadcrumb, Button, Image, Layout, Popconfirm, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
 
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined} from "@ant-design/icons";
 import Sidebar from "../../components/sidebar";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 interface DataType {
   id: string;
@@ -22,7 +23,7 @@ interface DataType {
 
 export const ManagePosts = () => {
   const [dataSource, setDatasource] = useState<DataType[]>([]);
-
+  
   const columns: TableProps<DataType>["columns"] = [
     {
       title: "Title",
@@ -50,18 +51,18 @@ export const ManagePosts = () => {
       },
     },
     {
-      title: "Create Date",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      width: "5%",
-      //   render: (date) => moment(date).format("DD/MM/yyyy"),
-    },
+        title: "Create Date",
+        dataIndex: "createdAt",
+        key: "createdAt",
+        width: "5%",
+        render: (createDate) => format(new Date(createDate), 'dd/MM/yyyy ')
+      },
     {
       title: "Update Date",
       dataIndex: "updatedAt",
       key: "updatedAt",
       width: "5%",
-      //   render: (date) => moment(date).format("DD/MM/yyyy"),
+      render: (updatedAt) => format(new Date(updatedAt), 'dd/MM/yyyy ')
     },
     {
       title: "URL Tag",

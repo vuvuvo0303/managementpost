@@ -4,6 +4,7 @@ import AddPost from "../components/AddPostPage/AddPost";
 import DashBoard from "../pages/dashboard/DashBoard";
 import Home from "../components/HomePage/Home";
 import ManagePosts from "../pages/dashboard/ManagePosts";
+import Details from "../components/DetailsPage/Details";
 function App() {
   const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ function App() {
     {
       path: "/addpost",
       element: <AddPost />,
+    },
+    {
+      path: "/blogs/:id",
+      element: <Details />,
     },
   ]);
   return (

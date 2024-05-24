@@ -4,4 +4,5 @@ export interface Blog {
     description: string;
     status: string;
     image: string;
+    createdAt: string;
 }

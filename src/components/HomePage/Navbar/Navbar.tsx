@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
     return (
         <Menu mode="horizontal" className="navbar-menu">
             <Menu.Item key="home">
-                <Link to="/">Home</Link>
+                <Link to="/"><img src="https://cdn.pixabay.com/photo/2012/04/13/12/30/new-32199_1280.png" alt="Logo" className="navbar-logo" style={{ width: '50px' }} /></Link>
             </Menu.Item>
             <Menu.Item key="dashboard">
                 <Link to="/dashboard/management-posts">Dashboard</Link>

@@ -1,4 +1,4 @@
-import { Avatar, Layout } from "antd";import Sidebar from "../../components/sidebar";
+import {  Layout } from "antd";import Sidebar from "../../components/sidebar";
 
 
 const DashBoard = () => {
