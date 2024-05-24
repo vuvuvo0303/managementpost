@@ -1,9 +1,5 @@
-import React from 'react'
-
 const AddPost = () => {
-    return (
-        <div>AddPost</div>
-    )
-}
+  return <div>AddPosxassst</div>;
+};
 
-export default AddPost
+export default AddPost;
