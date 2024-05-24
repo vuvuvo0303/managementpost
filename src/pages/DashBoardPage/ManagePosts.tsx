@@ -1,8 +1,10 @@
-import { Button, Image, Popconfirm, Space, Table, Tag } from "antd";
+import { Avatar, Breadcrumb, Button, Image, Layout, Popconfirm, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import Sidebar from "../../components/Sidebar";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 
 interface DataType {
   id: string;
@@ -16,7 +18,7 @@ interface DataType {
   status: string;
 }
 
-export const DashBoard = () => {
+export const ManagePosts = () => {
   const [dataSource, setDatasource] = useState<DataType[]>([]);
 
   const columns: TableProps<DataType>["columns"] = [
@@ -37,7 +39,7 @@ export const DashBoard = () => {
       key: "status",
       dataIndex: "status",
       render: (_, { status }) => {
-        let color = status === "Published" ? "green" : "volcano";
+        const color = status === "Published" ? "green" : "volcano";
         return (
           <Tag color={color} key={status}>
             {status.toUpperCase()}
@@ -107,25 +109,48 @@ export const DashBoard = () => {
     fetchPosts();
   }, []);
 
-  const handelDeleteMPosts = async (id) => {
+  const handelDeleteMPosts = async (id: string) => {
     const respponse = await axios.delete(`https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${id}`);
     console.log(respponse);
     const listAdterDelele = dataSource.filter((post) => post.id !== id);
     setDatasource(listAdterDelele);
   };
   return (
-    <div >
-      <div
-        className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-5 px-20"
-        style={{ backgroundImage: "url(/anhjj.webp)" }}
-      >
-        <h1 className="text-center text-3xl mb-5 text-black font-bold">Manage Posts</h1>
-        <Table columns={columns} dataSource={dataSource} />
-        
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sidebar />
+      <div className="flex-1  min-h-[100vh]">
+        <div className="p-5 bg-white shadow-lg flex justify-end ">
+          <div>
+            <Avatar>U</Avatar>
+          </div>
+        </div>
+        <div className="py-5 px-5">
+          <div>
+            <Breadcrumb
+              items={[
+                {
+                  href: "/",
+                  title: <HomeOutlined />,
+                },
+                {
+                  href: "/dashboard",
+                  title: (
+                    <>
+                      <UserOutlined />
+                      <span>DashBoard</span>
+                    </>
+                  ),
+                },
+                {
+                  title: "Management Posts",
+                },
+              ]}
+            />
+          </div>
+          <Table columns={columns} dataSource={dataSource} />
+        </div>
       </div>
-    </div>
+    </Layout>
   );
-  
-
 };
-export default DashBoard;
+export default ManagePosts;
