@@ -1,10 +1,17 @@
-import {  Breadcrumb, Button, Image, Layout, Popconfirm, Table, Tag } from "antd";
+// src/pages/dashboard/ManagePosts.tsx
+import {
+  Breadcrumb,
+  Button,
+  Image,
+  Layout,
+  Popconfirm,
+  Table,
+  Tag,
+} from "antd";
 import type { TableProps } from "antd";
 import axios from "axios";
-
 import { useEffect, useState } from "react";
-
-import { HomeOutlined} from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 import Sidebar from "../../components/sidebar";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
@@ -23,7 +30,7 @@ interface DataType {
 
 export const ManagePosts = () => {
   const [dataSource, setDatasource] = useState<DataType[]>([]);
-  
+
   const columns: TableProps<DataType>["columns"] = [
     {
       title: "Title",
@@ -51,18 +58,18 @@ export const ManagePosts = () => {
       },
     },
     {
-        title: "Create Date",
-        dataIndex: "createdAt",
-        key: "createdAt",
-        width: "5%",
-        render: (createDate) => format(new Date(createDate), 'dd/MM/yyyy ')
-      },
+      title: "Create Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      width: "5%",
+      render: (createDate) => format(new Date(createDate), "dd/MM/yyyy "),
+    },
     {
       title: "Update Date",
       dataIndex: "updatedAt",
       key: "updatedAt",
       width: "5%",
-      render: (updatedAt) => format(new Date(updatedAt), 'dd/MM/yyyy ')
+      render: (updatedAt) => format(new Date(updatedAt), "dd/MM/yyyy "),
     },
     {
       title: "URL Tag",
@@ -86,6 +93,11 @@ export const ManagePosts = () => {
       key: "id",
       render: (id) => (
         <>
+          <Link to={`/dashboard/updatepost/${id}`}>
+            <Button type="primary" style={{ marginRight: 8 }}>
+              Edit
+            </Button>
+          </Link>
           <Popconfirm
             title="Delete the task"
             description="Are you sure to delete this task?"
@@ -103,7 +115,9 @@ export const ManagePosts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await axios.get("https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement");
+      const response = await axios.get(
+        "https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement"
+      );
       console.log(response.data);
       setDatasource(response.data);
     };
@@ -111,11 +125,14 @@ export const ManagePosts = () => {
   }, []);
 
   const handelDeleteMPosts = async (id: string) => {
-    const respponse = await axios.delete(`https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${id}`);
+    const respponse = await axios.delete(
+      `https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${id}`
+    );
     console.log(respponse);
     const listAdterDelele = dataSource.filter((post) => post.id !== id);
     setDatasource(listAdterDelele);
   };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sidebar />

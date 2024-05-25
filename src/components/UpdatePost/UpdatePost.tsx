@@ -1,98 +1,163 @@
-import { Form, Input, Button, message } from "antd";
-import { useState } from "react";
+// src/components/UpdatePostPage/UpdatePost.tsx
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Button, Form, Input, Select, Upload, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import type { UploadFile } from "antd/es/upload/interface";
 
-// interface PostData {
-//   id: string;
-//   title: string;
-//   description: string;
-//   image: string;
-//   video: string;
-//   urlTag: string;
-//   status: string;
-// }
-
-interface UpdatePostProps {
-  postId: string;
+interface DataType {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  video: string;
+  createDate: string;
+  updateDate: string;
+  url_tag: string;
+  status: string;
 }
 
-const UpdatePost: React.FC<UpdatePostProps> = ({ postId }) => {
-  const [loading, setLoading] = useState<boolean>(false);
+const { Option } = Select;
 
-  const onFinish = async (values: any) => {
-    setLoading(true);
+const UpdatePost = () => {
+  const { id } = useParams<{ id: string }>();
+  const [post, setPost] = useState<DataType | null>(null);
+  const [imageFileList, setImageFileList] = useState<UploadFile[]>([]);
+  const [videoFileList, setVideoFileList] = useState<UploadFile[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(
+          `https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${id}`
+        );
+        const data = response.data;
+        setPost(data);
+        setImageFileList(
+          data.image
+            ? [
+                {
+                  uid: "-1",
+                  name: "image.png",
+                  status: "done",
+                  url: data.image,
+                },
+              ]
+            : []
+        );
+        setVideoFileList(
+          data.video
+            ? [
+                {
+                  uid: "-2",
+                  name: "video.mp4",
+                  status: "done",
+                  url: data.video,
+                },
+              ]
+            : []
+        );
+      } catch (error) {
+        console.error("Failed to fetch post:", error);
+      }
+    };
+    fetchPost();
+  }, [id]);
+
+  const handleUpdate = async (values: any) => {
     try {
-      const response = await axios.put(
-        `https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${postId}`,
-        values
+      const updatedPost = {
+        ...values,
+        image: imageFileList[0]?.url || post?.image,
+        video: videoFileList[0]?.url || post?.video,
+        updateDate: new Date().toISOString(),
+      };
+      await axios.put(
+        `https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${id}`,
+        updatedPost
       );
       message.success("Post updated successfully");
-      console.log(response.data);
-      setLoading(false);
+      navigate("/dashboard/management-posts");
     } catch (error) {
       message.error("Failed to update post");
-      setLoading(false);
+      console.error("Failed to update post:", error);
     }
   };
 
+  const handleImageChange = ({ fileList }: { fileList: UploadFile[] }) => {
+    setImageFileList(fileList);
+  };
+
+  const handleVideoChange = ({ fileList }: { fileList: UploadFile[] }) => {
+    setVideoFileList(fileList);
+  };
+
+  if (!post) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Form
-      name="update_post_form"
+      initialValues={post}
+      onFinish={handleUpdate}
       layout="vertical"
-      onFinish={onFinish}
-      initialValues={{}}
+      style={{ maxWidth: 600, margin: "0 auto", padding: "2rem" }}
     >
       <Form.Item
         name="title"
         label="Title"
-        rules={[{ required: true, message: "Please enter title" }]}
+        rules={[{ required: true, message: "Please input the title!" }]}
       >
         <Input />
       </Form.Item>
-
       <Form.Item
         name="description"
         label="Description"
-        rules={[{ required: true, message: "Please enter description" }]}
+        rules={[{ required: true, message: "Please input the description!" }]}
       >
         <Input.TextArea />
       </Form.Item>
-
-      <Form.Item
-        name="image"
-        label="Image URL"
-        rules={[{ required: true, message: "Please enter image URL" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="video"
-        label="Video URL"
-        rules={[{ required: true, message: "Please enter video URL" }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="urlTag"
-        label="URL Tag"
-        rules={[{ required: true, message: "Please enter URL tag" }]}
-      >
-        <Input />
-      </Form.Item>
-
       <Form.Item
         name="status"
         label="Status"
-        rules={[{ required: true, message: "Please select status" }]}
+        rules={[{ required: true, message: "Please select the status!" }]}
+      >
+        <Select>
+          <Option value="Published">Published</Option>
+          <Option value="Draft">Draft</Option>
+        </Select>
+      </Form.Item>
+      <Form.Item
+        name="url_tag"
+        label="URL Tag"
+        rules={[{ required: true, message: "Please input the URL tag!" }]}
       >
         <Input />
       </Form.Item>
-
+      <Form.Item name="image" label="Image">
+        <Upload
+          listType="picture"
+          fileList={imageFileList}
+          onChange={handleImageChange}
+          beforeUpload={() => false}
+        >
+          <Button icon={<UploadOutlined />}>Upload</Button>
+        </Upload>
+      </Form.Item>
+      <Form.Item name="video" label="Video">
+        <Upload
+          fileList={videoFileList}
+          onChange={handleVideoChange}
+          beforeUpload={() => false}
+        >
+          <Button icon={<UploadOutlined />}>Upload</Button>
+        </Upload>
+      </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading}>
-          Update
+        <Button type="primary" htmlType="submit">
+          Update Post
         </Button>
       </Form.Item>
     </Form>
