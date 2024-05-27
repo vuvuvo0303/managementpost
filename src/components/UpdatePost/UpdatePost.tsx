@@ -1,4 +1,3 @@
-// src/components/UpdatePostPage/UpdatePost.tsx
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -23,8 +22,9 @@ const { Option } = Select;
 const UpdatePost = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<DataType | null>(null);
-  const [imageFileList, setImageFileList] = useState<UploadFile[]>([]);
-  const [videoFileList, setVideoFileList] = useState<UploadFile[]>([]);
+  const [image, setImage] = useState<string>("");
+  const [video, setVideo] = useState<string>("");
+  const [urlTag, setUrlTag] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,30 +35,9 @@ const UpdatePost = () => {
         );
         const data = response.data;
         setPost(data);
-        setImageFileList(
-          data.image
-            ? [
-                {
-                  uid: "-1",
-                  name: "image.png",
-                  status: "done",
-                  url: data.image,
-                },
-              ]
-            : []
-        );
-        setVideoFileList(
-          data.video
-            ? [
-                {
-                  uid: "-2",
-                  name: "video.mp4",
-                  status: "done",
-                  url: data.video,
-                },
-              ]
-            : []
-        );
+        setImage(data.image);
+        setVideo(data.video);
+        setUrlTag(data.url_tag);
       } catch (error) {
         console.error("Failed to fetch post:", error);
       }
@@ -70,8 +49,9 @@ const UpdatePost = () => {
     try {
       const updatedPost = {
         ...values,
-        image: imageFileList[0]?.url || post?.image,
-        video: videoFileList[0]?.url || post?.video,
+        image,
+        video,
+        url_tag: urlTag,
         updateDate: new Date().toISOString(),
       };
       await axios.put(
@@ -84,14 +64,6 @@ const UpdatePost = () => {
       message.error("Failed to update post");
       console.error("Failed to update post:", error);
     }
-  };
-
-  const handleImageChange = ({ fileList }: { fileList: UploadFile[] }) => {
-    setImageFileList(fileList);
-  };
-
-  const handleVideoChange = ({ fileList }: { fileList: UploadFile[] }) => {
-    setVideoFileList(fileList);
   };
 
   if (!post) {
@@ -130,30 +102,17 @@ const UpdatePost = () => {
         </Select>
       </Form.Item>
       <Form.Item
-        name="url_tag"
+        name="url-tag"
         label="URL Tag"
         rules={[{ required: true, message: "Please input the URL tag!" }]}
       >
-        <Input />
+        <Input value={urlTag} onChange={(e) => setUrlTag(e.target.value)} />
       </Form.Item>
       <Form.Item name="image" label="Image">
-        <Upload
-          listType="picture"
-          fileList={imageFileList}
-          onChange={handleImageChange}
-          beforeUpload={() => false}
-        >
-          <Button icon={<UploadOutlined />}>Upload</Button>
-        </Upload>
+        <Input value={image} onChange={(e) => setImage(e.target.value)} />
       </Form.Item>
       <Form.Item name="video" label="Video">
-        <Upload
-          fileList={videoFileList}
-          onChange={handleVideoChange}
-          beforeUpload={() => false}
-        >
-          <Button icon={<UploadOutlined />}>Upload</Button>
-        </Upload>
+        <Input value={video} onChange={(e) => setVideo(e.target.value)} />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
