@@ -1,33 +1,29 @@
-/* Navbar container */
-.ant-menu-horizontal {
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.navbar-logo {
+    margin-right: auto;
+}
+
+.navbar-dashboard-button {
+    margin-left: auto;
+}
+
+.dashboard-button {
+    background-color: #1890ff;
+    color: #fff;
     border: none;
-    /* Remove border */
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
-/* Menu items */
-.ant-menu-item {
-    margin: 0 10px;
-    /* Adjust spacing between menu items */
-}
-
-/* Menu item link */
-.ant-menu-item a {
-    color: #333;
-    /* Set text color */
-    text-decoration: none;
-    /* Remove underline */
-    transition: color 0.3s;
-    /* Smooth transition for color change */
-}
-
-/* Hover effect */
-.ant-menu-item:hover a {
-    color: #1890ff;
-    /* Change text color on hover */
-}
-
-/* Active menu item */
-.ant-menu-item-selected a {
-    color: #1890ff;
-    /* Set text color for active menu item */
+.dashboard-button:hover {
+    background-color: #40a9ff;
 }
