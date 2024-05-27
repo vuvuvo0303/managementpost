@@ -1,13 +1,4 @@
-// src/pages/dashboard/ManagePosts.tsx
-import {
-  Breadcrumb,
-  Button,
-  Image,
-  Layout,
-  Popconfirm,
-  Table,
-  Tag,
-} from "antd";
+import { Breadcrumb, Button, Image, Layout, Popconfirm, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -37,12 +28,13 @@ export const ManagePosts = () => {
       dataIndex: "title",
       key: "title",
       render: (text) => <a>{text}</a>,
-      width: "15px",
+      // width: "15px",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      width:"200px"
     },
     {
       title: "Status",
@@ -61,26 +53,28 @@ export const ManagePosts = () => {
       title: "Create Date",
       dataIndex: "createdAt",
       key: "createdAt",
-      width: "5%",
+      // width: "5%",
       render: (createDate) => format(new Date(createDate), "dd/MM/yyyy "),
     },
     {
       title: "Update Date",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      width: "5%",
+      // width: "5%",
       render: (updatedAt) => format(new Date(updatedAt), "dd/MM/yyyy "),
     },
     {
       title: "URL Tag",
-      dataIndex: "url-tag",
+      dataIndex: "url_tag",
       key: "url-tag",
+      width:"200px"
+
     },
     {
       title: "Image",
       dataIndex: "image",
       key: "image",
-      render: (anh) => <Image src={anh} width={50} />,
+      render: (anh) => <Image src={anh} width={100} />,
     },
     {
       title: "Video",
@@ -91,12 +85,13 @@ export const ManagePosts = () => {
       title: "Action",
       dataIndex: "id",
       key: "id",
+      width:"500px",
+      
       render: (id) => (
         <>
           <Link to={`/dashboard/updatepost/${id}`}>
-            <Button type="primary" style={{ marginRight: 8 }}>
-              Edit
-            </Button>
+            {" "}
+            <Button   type="primary " >Edit</Button>
           </Link>
           <Popconfirm
             title="Delete the task"
@@ -104,7 +99,7 @@ export const ManagePosts = () => {
             onConfirm={() => handelDeleteMPosts(id)}
             okText="Yes"
           >
-            <Button type="primary" danger>
+            <Button type="primary" danger style={{marginLeft:"10px"}}>
               Delete
             </Button>
           </Popconfirm>
@@ -115,22 +110,22 @@ export const ManagePosts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await axios.get(
-        "https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement"
+      const response = await axios.get("https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement");
+      console.log(response);
+      const sortedData = response.data.sort(
+        (a: DataType, b: DataType) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
       );
-      console.log(response.data);
-      setDatasource(response.data);
+
+      setDatasource(sortedData);
     };
     fetchPosts();
   }, []);
 
   const handelDeleteMPosts = async (id: string) => {
-    const respponse = await axios.delete(
-      `https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${id}`
-    );
-    console.log(respponse);
-    const listAdterDelele = dataSource.filter((post) => post.id !== id);
-    setDatasource(listAdterDelele);
+    const response = await axios.delete(`https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${id}`);
+    console.log(response);
+    const listAfterDelete = dataSource.filter((post) => post.id !== id);
+    setDatasource(listAfterDelete);
   };
 
   return (
@@ -139,7 +134,6 @@ export const ManagePosts = () => {
       <div className="flex-1 min-h-[100vh]">
         <div className="p-5 bg-white shadow-lg flex justify-end">
           <Link to={"/addpost"}>
-            {" "}
             <Button type="primary" style={{ width: "200px" }}>
               Add
             </Button>

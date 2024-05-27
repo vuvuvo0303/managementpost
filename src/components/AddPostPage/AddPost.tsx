@@ -17,22 +17,23 @@ const formTailLayout = {
   wrapperCol: { span: 24, offset: 0 },
 };
 
-type FormData = {
+interface FormData {
   title: string;
   image: string;
   status: string;
   video?: string;
   urlTag: string;
   description: string;
-};
+}
 
 const AddPost: React.FC = () => {
   const [form] = Form.useForm();
   const [statusOptions] = useState(["Published", "Draft"]);
   const navigate = useNavigate(); // Initialize useNavigate
+  const defaultImage = "https://via.placeholder.com/300?text=No+Image"; // Placeholder image URL
   const [formData, setFormData] = useState<FormData>({
     title: "",
-    image: "",
+    image: "" || defaultImage,
     status: "",
     video: "",
     urlTag: "",
