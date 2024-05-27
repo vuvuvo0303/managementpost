@@ -34,14 +34,14 @@ export const ManagePosts = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width:"200px"
+      width: "200px",
     },
     {
       title: "Status",
       key: "status",
       dataIndex: "status",
       render: (_, { status }) => {
-        const color = status === "Published" ? "green" : "volcano";
+        const color = status === "Published" ? "green" : status === "Draft" ? "volcano" : "black";
         return (
           <Tag color={color} key={status}>
             {status.toUpperCase()}
@@ -49,6 +49,7 @@ export const ManagePosts = () => {
         );
       },
     },
+
     {
       title: "Create Date",
       dataIndex: "createdAt",
@@ -67,8 +68,7 @@ export const ManagePosts = () => {
       title: "URL Tag",
       dataIndex: "url_tag",
       key: "url-tag",
-      width:"200px"
-
+      width: "200px",
     },
     {
       title: "Image",
@@ -85,13 +85,13 @@ export const ManagePosts = () => {
       title: "Action",
       dataIndex: "id",
       key: "id",
-      width:"500px",
-      
+      width: "500px",
+
       render: (id) => (
         <>
           <Link to={`/dashboard/updatepost/${id}`}>
             {" "}
-            <Button   type="primary " >Edit</Button>
+            <Button type="primary ">Edit</Button>
           </Link>
           <Popconfirm
             title="Delete the task"
@@ -99,7 +99,7 @@ export const ManagePosts = () => {
             onConfirm={() => handelDeleteMPosts(id)}
             okText="Yes"
           >
-            <Button type="primary" danger style={{marginLeft:"10px"}}>
+            <Button type="primary" danger style={{ marginLeft: "10px" }}>
               Delete
             </Button>
           </Popconfirm>
