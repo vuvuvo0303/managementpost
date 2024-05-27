@@ -25,6 +25,9 @@ const UpdatePost = () => {
   const [image, setImage] = useState<string>("");
   const [video, setVideo] = useState<string>("");
   const [urlTag, setUrlTag] = useState<string>("");
+  const [image, setImage] = useState<string>("");
+  const [video, setVideo] = useState<string>("");
+  const [urlTag, setUrlTag] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +36,9 @@ const UpdatePost = () => {
         const response = await axios.get(`https://664f16ddfafad45dfae24968.mockapi.io/api/v1/postManagement/${id}`);
         const data = response.data;
         setPost(data);
+        setImage(data.image);
+        setVideo(data.video);
+        setUrlTag(data.url_tag);
         setImage(data.image);
         setVideo(data.video);
         setUrlTag(data.url_tag);
@@ -47,6 +53,9 @@ const UpdatePost = () => {
     try {
       const updatedPost = {
         ...values,
+        image,
+        video,
+        url_tag: urlTag,
         image,
         video,
         url_tag: urlTag,
